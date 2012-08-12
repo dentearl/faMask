@@ -29,27 +29,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "common.h"
-#include "de_hashlib.h"
+#include "sonLib.h"
 
 typedef struct _bedLine {
     char *line;
     char *name;
     uint32_t start; // 0-based inclusive
     uint32_t stop; // 0-based exclusive
-    struct _bedLine *next;
-    struct _bedLine *prev;
 } bedLine_t;
 
+FILE* de_fopen(const char *filename, char const *mode);
 void usage(void);
-int parseArgs(int argc, char **argv, char **fasta, char **bed, bool *softAdd);
-bedLine_t *parseBed(const char *bedfile);
+int parseArgs(int argc, char **argv, char **fasta, char **bed, bool *hard, bool *soft, bool *softAdd);
+stHash *parseBed(const char *bedfile);
 bedLine_t *bedLine_construct(void);
 void bedLineList_destruct(bedLine_t *b);
 void bedLine_destruct(bedLine_t *b);
 bedLine_t *bedLine_copy(bedLine_t *b);
 bedLine_t *bedLineList_copy(bedLine_t *b);
-bedLine_t *getTail(bedLine_t *bl);
-deHash_t *hashifyBed(bedLine_t *head);
-void processFasta(const char *fasta, deHash_t *bedhash, bool softAdd);
+void processFasta(const char *fasta, stHash *bedhash, bool hard, bool soft, bool softAdd);
+int bedLine_cmp(const void *a, const void *b);
 #endif // FAMASK_H_

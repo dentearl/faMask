@@ -1,4 +1,5 @@
-cflags= -O3 -g -Wall -std=c99 -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Werror --pedantic -funroll-loops -lm 
+sonLibPath = ../sonLib/lib
+cflags= -O0 -g -Wall -std=c99 -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Werror --pedantic -funroll-loops -lm 
 .PHONY: all clean
 all: ./bin/faMask
 
@@ -6,9 +7,9 @@ all: ./bin/faMask
 	gcc ${cflags} -c $< -o $@.tmp
 	mv $@.tmp $@
 
-bin/faMask: src/faMask.c src/faMask.h src/common.o src/de_hashlib.o
+bin/faMask: src/faMask.c src/faMask.h 
 	mkdir -p $(dir $@)
-	gcc ${cflags} $^ -o $@.tmp
+	gcc ${cflags} $^ -I ${sonLibPath} ${sonLibPath}/sonLib.a -o $@.tmp
 	mv $@.tmp $@
 
 clean:
