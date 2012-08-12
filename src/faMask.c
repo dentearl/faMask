@@ -238,6 +238,7 @@ void processFasta(const char *fasta, deHash_t *bedhash, bool softAdd) {
         }
         bytesRead = de_getline(&line, &nBytes, fh);
     }
+    free(line);
     fclose(fh);
 }
 int main(int argc, char **argv) {
